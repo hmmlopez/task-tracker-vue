@@ -1,0 +1,28 @@
+# for local development
+version: "3.9"
+services:
+  task-tracker:
+    container_name: task-tracker
+    build:
+      context: .
+      target: "develop-stage"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/app"
+    environment:
+      - NODE_ENV=development
+    command: /bin/sh -c "yarn dev"
+
+  json-server:
+    container_name: json-server
+    build:
+      context: .
+      dockerfile: Dockerfile-jsonServer
+    ports:
+      - "5000:5000"
+    volumes:
+      - ".:/app"
+    environment:
+      - NODE_ENV=development
+    command: /bin/sh -c "json-server --watch db.json"
